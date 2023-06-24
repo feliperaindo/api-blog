@@ -6,7 +6,7 @@
   },
   "overrides": [
     {
-      "files": ["*-category.js", "*-blog-post.js"],
+      "files": ["*-category.js", "*-blog-post.js", "*-user.js"],
       "rules": { 
         "max-lines-per-function": "off",
         "camelcase": "off"
