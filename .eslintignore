@@ -1,4 +1,2 @@
 /__tests__
-# **/migrations/
-# **/seeders/
-# **/models/
+**/models/index.js
