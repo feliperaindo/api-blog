@@ -1,13 +1,17 @@
 const express = require('express');
 
+
+// Rotas
+const routerManager = require('./routes/exporter')
+
+// Fonte da verdade
+const { routes } = require('./SSOT/exporter')
 // ...
 
 const app = express();
 
 // não remova ou mova esse endpoint
-app.get('/', (_request, response) => {
-  response.send();
-});
+app.get(routes.ROOT, routerManager.ROOT);
 
 app.use(express.json());
 
