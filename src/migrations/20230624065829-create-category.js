@@ -1,6 +1,6 @@
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('categories', {
+  up: async (queryInterface, Sequelize) => 
+    queryInterface.createTable('categories', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,19 +11,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      created_at: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-      },
-      updated_at: {
-        allowNull: false,
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
-      },
-    });
-  },
-  down: async (queryInterface, __Sequelize) => {
-    await queryInterface.dropTable('categories');
-  },
+    }),
+  down: async (queryInterface, __Sequelize) => queryInterface.dropTable('categories'),
 };

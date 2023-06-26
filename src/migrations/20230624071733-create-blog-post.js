@@ -1,6 +1,6 @@
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('blog_posts', {
+  up: async (queryInterface, Sequelize) => 
+    queryInterface.createTable('blog_posts', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -27,10 +27,14 @@ module.exports = {
       },
       user_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        references: {
+          mode: 'users',
+          key: 'id', 
+        },
       },
-    });
-  },
-  down: async (queryInterface, __Sequelize) => {
-    await queryInterface.dropTable('blog_posts');
-  },
+    }),
+  down: async (queryInterface, __Sequelize) => queryInterface.dropTable('blog_posts'),
 };
