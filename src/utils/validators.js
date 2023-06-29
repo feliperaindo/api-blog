@@ -12,6 +12,14 @@ function existLoginFields(fields) {
   });
 }
 
+function existsUserFields(fields) {
+  fieldsProvider.userFields().forEach((field) => {
+    if (!checkers.keyChecker(fields, field)) {
+      throw new Error(errorMessages.MISSING_FIELDS, { cause: http.BAD_REQUEST });
+    }
+  });
+}
+
 function validateEmail(email) {
   if (!checkers.emailChecker(email)) {
     throw new Error(errorMessages.INVALID_EMAIL, { cause: http.BAD_REQUEST });
@@ -24,4 +32,16 @@ function validatePassword(password) {
   }
 }
 
-module.exports = { existLoginFields, validateEmail, validatePassword };
+function validateDisplay(display) {
+  if (!checkers.displayChecker(display)) {
+    throw new Error(errorMessages.INVALID_DISPLAY, { cause: http.BAD_REQUEST });
+  }
+}
+
+module.exports = { 
+  validateEmail,
+  validateDisplay,
+  validatePassword,
+  existLoginFields,
+  existsUserFields,
+};
