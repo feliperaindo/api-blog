@@ -9,4 +9,8 @@ function createToken(email, password) {
   return jwt.sign({ email, password }, SECRET, jwtConfig);
 }
 
-module.exports = { createToken };
+function verifyToken(token) {
+  return jwt.verify(token, SECRET);
+}
+
+module.exports = { createToken, verifyToken };

@@ -1,8 +1,11 @@
 // Fonte da verdade
-const { http, errorMessages } = require('../SSOT/exporter');
+const { http, errorMessages, constants } = require('../SSOT/exporter');
 
 // Helpers
 const { fieldsProvider, checkers } = require('../helpers/exporter');
+
+// JWT manager
+const jwtManager = require('./JWT/jwtManager');
 
 function existLoginFields(fields) {
   fieldsProvider.loginFields().forEach((field) => {
@@ -18,6 +21,13 @@ function existsUserFields(fields) {
       throw new Error(errorMessages.MISSING_FIELDS, { cause: http.BAD_REQUEST });
     }
   });
+}
+
+function existTokenField(header) {
+  if (!checkers.keyChecker(header, constants.TOKEN_FIELD)
+  || checkers.isEmpty(header.authorization)) {
+    throw new Error(errorMessages.TOKEN_NOT_FOUND, { cause: http.UNAUTHORIZED });
+  }
 }
 
 function validateEmail(email) {
@@ -38,9 +48,19 @@ function validateDisplay(display) {
   }
 }
 
+function validateToken(token) {
+  try {
+    jwtManager.verifyToken(token);
+  } catch (__error) {
+    throw new Error(errorMessages.INVALID_TOKEN, { cause: http.UNAUTHORIZED });
+  }
+}
+
 module.exports = { 
   validateEmail,
+  validateToken,
   validateDisplay,
+  existTokenField,
   validatePassword,
   existLoginFields,
   existsUserFields,

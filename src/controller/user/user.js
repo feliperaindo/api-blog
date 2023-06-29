@@ -13,8 +13,9 @@ async function registerUser(request, response, next) {
   }
 }
 
-async function allUsers(request, response) {
-  return { request, response };
+async function allUsers(__request, response) {
+  const all = await service.user.getAll();
+  return response.status(http.OK).send(all);
 }
 
 async function userById(request, response) {

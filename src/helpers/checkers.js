@@ -26,6 +26,6 @@ module.exports = {
   isEmpty,
   keyChecker,
   emailChecker,
-  passwordChecker,
   displayChecker,
+  passwordChecker,
 };
