@@ -14,4 +14,8 @@ function passwordChecker(password) {
   return password.length >= constants.PASSWORD_MIN;
 }
 
-module.exports = { keyChecker, emailChecker, passwordChecker };
+function displayChecker(display) {
+  return display.length >= constants.DISPLAY_MIN;
+}
+
+module.exports = { keyChecker, emailChecker, passwordChecker, displayChecker };

@@ -1,6 +1,6 @@
 const utils = require('../../utils/validators');
 
-function validateFields(request, response, next) {
+function validateFields(request, __response, next) {
   try {
     utils.existLoginFields(request.body);
     utils.validateEmail(request.body.email);
@@ -9,7 +9,6 @@ function validateFields(request, response, next) {
   } catch (error) {
     next(error);
   }
-  return { request, response, next };
 }
 
 module.exports = { validateFields };
