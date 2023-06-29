@@ -1,11 +1,10 @@
 const express = require('express');
 
-
 // Rotas
-const routerManager = require('./routes/exporter')
+const routerManager = require('./routes/exporter');
 
 // Fonte da verdade
-const { routes } = require('./SSOT/exporter')
+const { routes } = require('./SSOT/exporter');
 // ...
 
 const app = express();
