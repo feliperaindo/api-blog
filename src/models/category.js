@@ -1,4 +1,10 @@
-module.exports = (sequelize, DataTypes) => 
-  sequelize.define('category', {
+module.exports = (sequelize, DataTypes) => {
+  const Category = sequelize.define('category', {
     name: DataTypes.STRING,
-  }, { modelName: 'category', underscored: true, timestamps: false });
+  }, { tableName: 'category', underscored: true, timestamps: false });
+
+  Category.associate = ({ postCategory }) => Category.hasMany(postCategory, {
+    foreignKey: 'categoryId' });
+
+  return Category;
+};
