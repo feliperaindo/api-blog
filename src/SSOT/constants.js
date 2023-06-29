@@ -7,8 +7,10 @@ const PASSWORD_FIELD = 'password';
 // Rules
 const DISPLAY_MIN = 8;
 const PASSWORD_MIN = 6;
+const EMPTY = 0;
 
 module.exports = {
+  EMPTY,
   DISPLAY_MIN,
   EMAIL_FIELD,
   IMAGE_FIELD,

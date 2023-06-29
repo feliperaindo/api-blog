@@ -18,4 +18,14 @@ function displayChecker(display) {
   return display.length >= constants.DISPLAY_MIN;
 }
 
-module.exports = { keyChecker, emailChecker, passwordChecker, displayChecker };
+function isEmpty(value) {
+  return value.length === constants.EMPTY;
+}
+
+module.exports = {
+  isEmpty,
+  keyChecker,
+  emailChecker,
+  passwordChecker,
+  displayChecker,
+};

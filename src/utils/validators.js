@@ -6,7 +6,7 @@ const { fieldsProvider, checkers } = require('../helpers/exporter');
 
 function existLoginFields(fields) {
   fieldsProvider.loginFields().forEach((field) => {
-    if (!checkers.keyChecker(fields, field)) {
+    if (!checkers.keyChecker(fields, field) || checkers.isEmpty(fields[field])) {
       throw new Error(errorMessages.MISSING_FIELDS, { cause: http.BAD_REQUEST });
     }
   });
