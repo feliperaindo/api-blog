@@ -1,3 +1,3 @@
-const errorMid = require('./errorMid');
+const errorMid = require('./global/errorMid');
 
 module.exports = { errorMid };
