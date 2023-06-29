@@ -1,4 +1,4 @@
-function root(response, __request) {
+function root(__request, response) {
   return response.send();
 }
 
