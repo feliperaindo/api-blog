@@ -1,3 +1,3 @@
 const ROOT = '/';
 
-module.exports = { ROOT }
+module.exports = { ROOT };
