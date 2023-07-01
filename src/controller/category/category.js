@@ -9,7 +9,8 @@ async function registerCategory(request, response) {
 }
 
 async function allCategories(request, response) {
-  return { request, response };
+  const all = await service.category.getAll();
+  return response.status(http.OK).send(all);
 }
 
 module.exports = { registerCategory, allCategories };

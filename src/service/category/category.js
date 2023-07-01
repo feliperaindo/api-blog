@@ -5,4 +5,8 @@ async function postCategory(name) {
   return { id: newCategory.null, name };
 }
 
-module.exports = { postCategory };
+async function getAll() {
+  return Category.findAll({ raw: true });
+}
+
+module.exports = { getAll, postCategory };
