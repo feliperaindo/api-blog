@@ -15,6 +15,18 @@ async function getUserByEmail(email) {
   return User.findOne({ where: { email } });
 }
 
+async function getUserById(id) {
+  const user = await User.findByPk(
+    id,
+    { raw: true, attributes: { exclude: [constants.PASSWORD_FIELD] } },
+  );
+
+  if (user === null) {
+   throw new Error(errorMessages.USER_NOT_FOUND, { cause: http.NOT_FOUND });
+  }
+  return user;
+}
+
 async function postUser(info) {
   const { email, password, displayName } = info;
   const image = info.image || null;
@@ -28,4 +40,9 @@ async function postUser(info) {
   throw new Error(errorMessages.USER_REGISTERED, { cause: http.CONFLICT });
 }
 
-module.exports = { getAll, postUser, getUserByEmail };
+module.exports = { 
+  getAll,
+  postUser,
+  getUserById,
+  getUserByEmail,
+};

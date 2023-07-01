@@ -18,8 +18,13 @@ async function allUsers(__request, response) {
   return response.status(http.OK).send(all);
 }
 
-async function userById(request, response) {
-  return { request, response };
+async function userById(request, response, next) {
+  try {
+    const user = await service.user.getUserById(request.params.id);
+    return response.status(http.OK).send(user);
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function deleteMe(request, response) {
