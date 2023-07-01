@@ -1,4 +1,5 @@
 // Fields
+const NAME_FIELD = 'name';
 const EMAIL_FIELD = 'email';
 const IMAGE_FIELD = 'image';
 const TOKEN_FIELD = 'authorization';
@@ -17,6 +18,7 @@ const INVALID_SIGNATURE = 'invalid signature';
 
 module.exports = {
   EMPTY,
+  NAME_FIELD,
   DISPLAY_MIN,
   EMAIL_FIELD,
   IMAGE_FIELD,
