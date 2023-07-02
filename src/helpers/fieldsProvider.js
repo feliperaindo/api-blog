@@ -9,4 +9,9 @@ function userFields() {
   return [DISPLAY_FIELD, EMAIL_FIELD, PASSWORD_FIELD];
 }
 
-module.exports = { loginFields, userFields };
+function postFields() {
+  const { TITLE_FIELD, CONTENT_FIELD } = constants;
+  return [TITLE_FIELD, CONTENT_FIELD];
+}
+
+module.exports = { loginFields, userFields, postFields };

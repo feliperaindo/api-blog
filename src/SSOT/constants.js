@@ -1,9 +1,14 @@
 // Fields
+const POST = 'post';
+const USER = 'user';
+const LOGIN = 'login';
 const NAME_FIELD = 'name';
 const EMAIL_FIELD = 'email';
 const IMAGE_FIELD = 'image';
+const TITLE_FIELD = 'title';
 const TOKEN_FIELD = 'authorization';
 const DISPLAY_FIELD = 'displayName';
+const CONTENT_FIELD = 'content';
 const PASSWORD_FIELD = 'password';
 
 // Rules
@@ -17,13 +22,18 @@ const EXPIRED_TOKEN = 'jwt expired';
 const INVALID_SIGNATURE = 'invalid signature';
 
 module.exports = {
+  POST,
+  USER,
+  LOGIN,
   EMPTY,
   NAME_FIELD,
   DISPLAY_MIN,
   EMAIL_FIELD,
   IMAGE_FIELD,
+  TITLE_FIELD,
   TOKEN_FIELD,
   PASSWORD_MIN,
+  CONTENT_FIELD,
   DISPLAY_FIELD,
   EXPIRED_TOKEN,
   INVALID_TOKEN,

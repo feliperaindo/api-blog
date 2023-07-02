@@ -1,9 +1,12 @@
+// Fonte da verdade
+const { constants } = require('../../SSOT/exporter'); 
+
 // Utils
 const utils = require('../../utils/validators');
 
 function validadeFields(request, __response, next) {
   try {
-    utils.existsUserFields(request.body);
+    utils.existFields(request.body, constants.USER);
     const { email, password, displayName } = request.body;
     utils.validateEmail(email);
     utils.validatePassword(password);
