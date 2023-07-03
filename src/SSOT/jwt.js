@@ -1,4 +1,10 @@
-const expiration = '1h';
-const algorithm = 'HS256';
+// config
+const EXPIRATION = '1h';
+const ALGORITHM = 'HS256';
+const CONFIG = { expiresIn: EXPIRATION, algorithm: ALGORITHM };
 
-module.exports = { expiresIn: expiration, algorithm };
+module.exports = {
+  CONFIG,
+  ALGORITHM,
+  EXPIRATION,
+};

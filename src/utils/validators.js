@@ -1,5 +1,5 @@
 // Fonte da verdade
-const { http, errorMessages, constants } = require('../SSOT/exporter');
+const { http, errorMessages, fields } = require('../SSOT/exporter');
 
 // Helpers
 const { fieldsProvider, checkers } = require('../helpers/exporter');
@@ -7,7 +7,7 @@ const { fieldsProvider, checkers } = require('../helpers/exporter');
 // JWT manager
 const jwtManager = require('./JWT/jwtManager');
 
-function existFields(fields, type) {
+function existFields(allFields, type) {
   const allTypes = {
     login: fieldsProvider.loginFields(),
     user: fieldsProvider.userFields(),
@@ -15,22 +15,22 @@ function existFields(fields, type) {
   };
 
   allTypes[type].forEach((field) => {
-    if (!checkers.keyChecker(fields, field) || checkers.isEmpty(fields[field])) {
+    if (!checkers.keyChecker(allFields, field) || checkers.isEmpty(allFields[field])) {
       throw new Error(errorMessages.MISSING_FIELDS, { cause: http.BAD_REQUEST });
     }
   });
 }
 
 function existTokenField(header) {
-  if (!checkers.keyChecker(header, constants.TOKEN_FIELD)
-      || checkers.isEmpty(header[constants.TOKEN_FIELD])) {
+  if (!checkers.keyChecker(header, fields.TOKEN)
+      || checkers.isEmpty(header[fields.TOKEN])) {
     throw new Error(errorMessages.TOKEN_NOT_FOUND, { cause: http.UNAUTHORIZED });
   }
 }
 
 function existCategoryFields(field) {
-  if (!checkers.keyChecker(field, constants.NAME_FIELD)
-      || checkers.isEmpty(field[constants.NAME_FIELD])) {
+  if (!checkers.keyChecker(field, fields.NAME)
+      || checkers.isEmpty(field[fields.NAME])) {
     throw new Error(errorMessages.NAME_NOT_FOUND, { cause: http.BAD_REQUEST });
   }
 }

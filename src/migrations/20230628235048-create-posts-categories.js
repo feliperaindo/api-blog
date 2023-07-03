@@ -1,36 +1,38 @@
+const { migration } = require('../SSOT/exporter');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => 
-    queryInterface.createTable('posts_categories', {
+    queryInterface.createTable(migration.POSTS_CATEGORIES, {
       postId: {
-        field: 'post_id',
+        field: migration.POST_ID,
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'blog_posts', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        references: { model: migration.BLOG_POSTS, key: migration.DEFAULT },
+        onUpdate: migration.CASCADE,
+        onDelete: migration.CASCADE,
         primaryKey: true,
       },
       categoryId: {
-        field: 'category_id',
+        field: migration.CATEGORY_ID,
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'categories', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        references: { model: migration.CATEGORIES, key: migration.DEFAULT },
+        onUpdate: migration.CASCADE,
+        onDelete: migration.CASCADE,
         primaryKey: true,        
       },
       createdAt: {
-        field: 'created_at',
+        field: migration.CREATED_AT,
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: Sequelize.literal(migration.TIMESTAMP),
       },
       updatedAt: {
-        field: 'updated_at',
+        field: migration.UPDATED_AT,
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+        defaultValue: Sequelize.literal(migration.TIMESTAMP_UPDATE),
       },
     }),
-  down: async (queryInterface, __Sequelize) => queryInterface.dropTable('posts_categories'),
+  down: async (queryInterface, __Sequelize) => queryInterface.dropTable(migration.POSTS_CATEGORIES),
 };

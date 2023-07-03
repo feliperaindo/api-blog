@@ -10,7 +10,8 @@
         "*-category.js",
         "*-blog-post.js",
         "*-user.js",
-        "*-posts-categories.js"
+        "*-posts-categories.js",
+        "PostCategory.js"
       ],
       "rules": { 
         "max-lines-per-function": "off"

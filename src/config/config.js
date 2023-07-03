@@ -1,23 +1,26 @@
-const environment = process.env.NODE_ENV || 'test';
+// fonte da verdade
+const { sequelize } = require('../SSOT/exporter');
+
+const environment = process.env.NODE_ENV || sequelize.ENVIRONMENT;
 
 const suffix = {
-  dev: '-dev',
-  development: '-dev',
-  test: '-test',
+  dev: sequelize.SUFFIX_DEV,
+  development: sequelize.SUFFIX_DEV,
+  test: sequelize.SUFFIX_TEST,
 };
 
 const options = {
-  host: process.env.MYSQL_HOST || 'localhost',
-  port: process.env.MYSQL_PORT || '3306',
+  host: process.env.MYSQL_HOST || sequelize.HOST,
+  port: process.env.MYSQL_PORT || sequelize.PORT,
   database: 
-    `${process.env.MYSQL_DB_NAME || 'blogs-api'}${suffix[environment] || suffix.test}`,
-  username: process.env.MYSQL_USER || 'root',
-  password: process.env.MYSQL_PASSWORD || '1234',
-  dialect: 'mysql',
+    `${process.env.MYSQL_DB_NAME || sequelize.DATABASE}${suffix[environment] || suffix.test}`,
+  username: process.env.MYSQL_USER || sequelize.USERNAME,
+  password: process.env.MYSQL_PASSWORD || sequelize.PASSWORD,
+  dialect: sequelize.DIALECT,
   dialectOptions: {
-    timezone: 'Z',
+    timezone: sequelize.TIMEZONE,
   },
-  logging: process.env.DEBUG !== 'false',
+  logging: process.env.DEBUG !== sequelize.LOGGING,
 };
 
 module.exports = {

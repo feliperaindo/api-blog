@@ -1,5 +1,7 @@
+const { model } = require('../SSOT/exporter');
+
 module.exports = (sequelize, DataTypes) => {
-  const BlogPost = sequelize.define('BlogPost', {
+  const BlogPost = sequelize.define(model.BLOG_POST_MODEL, {
     id: { type: DataTypes.INTEGER, primaryKey: true },
     title: DataTypes.STRING,
     content: DataTypes.STRING,
@@ -9,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
   }, { underscored: true, timestamps: false });
 
   BlogPost.associate = ({ User, PostCategory }) => {
-    BlogPost.belongsTo(User, { foreignKey: 'id', as: 'user' });
-    BlogPost.hasMany(PostCategory, { foreignKey: 'postId' });
+    BlogPost.belongsTo(User, { foreignKey: model.DEFAULT, as: model.USER_ALIAS });
+    BlogPost.hasMany(PostCategory, { foreignKey: model.POST_ID });
   };
 
   return BlogPost;

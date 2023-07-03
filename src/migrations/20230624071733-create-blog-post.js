@@ -1,6 +1,8 @@
+const { migration } = require('../SSOT/exporter');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => 
-    queryInterface.createTable('blog_posts', {
+    queryInterface.createTable(migration.BLOG_POSTS, {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -18,24 +20,24 @@ module.exports = {
       published: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        defaultValue: Sequelize.literal(migration.TIMESTAMP),
       },
       updated: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'),
+        defaultValue: Sequelize.literal(migration.TIMESTAMP_UPDATE),
       },
       userId: {
-        field: 'user_id',
+        field: migration.USER_ID,
         type: Sequelize.INTEGER,
         allowNull: false,
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onUpdate: migration.CASCADE,
+        onDelete: migration.CASCADE,
         references: {
-          model: 'users',
-          key: 'id', 
+          model: migration.USERS,
+          key: migration.DEFAULT,
         },
       },
     }),
-  down: async (queryInterface, __Sequelize) => queryInterface.dropTable('blog_posts'),
+  down: async (queryInterface, __Sequelize) => queryInterface.dropTable(migration.BLOG_POSTS),
 };

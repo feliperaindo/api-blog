@@ -1,6 +1,7 @@
 // Fonte da verdade
 const { http } = require('../../SSOT/exporter');
 
+// Service
 const service = require('../../service/exporter');
 
 async function registerCategory(request, response) {

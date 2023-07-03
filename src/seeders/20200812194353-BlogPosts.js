@@ -1,5 +1,7 @@
+const { migration } = require('../SSOT/exporter');
+
 module.exports = {
-  up: async (queryInterface, _Sequelize) => queryInterface.bulkInsert('blog_posts', [
+  up: async (queryInterface, _Sequelize) => queryInterface.bulkInsert(migration.BLOG_POSTS, [
       { 
         id: 1,
         title: 'Post do Ano',
@@ -18,5 +20,5 @@ module.exports = {
       },
   ]),
   down: async (queryInterface, _Sequelize) => 
-    queryInterface.bulkDelete('blog_posts', null, {}),
+    queryInterface.bulkDelete(migration.BLOG_POSTS, null, {}),
 };

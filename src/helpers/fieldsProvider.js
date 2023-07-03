@@ -1,17 +1,17 @@
-const { constants } = require('../SSOT/exporter');
+const { fields } = require('../SSOT/exporter');
 
 function loginFields() {
-  return [constants.EMAIL_FIELD, constants.PASSWORD_FIELD];
+  return [fields.EMAIL, fields.PASSWORD];
 }
 
 function userFields() {
-  const { DISPLAY_FIELD, EMAIL_FIELD, PASSWORD_FIELD } = constants;
-  return [DISPLAY_FIELD, EMAIL_FIELD, PASSWORD_FIELD];
+  const { DISPLAY, EMAIL, PASSWORD } = fields;
+  return [DISPLAY, EMAIL, PASSWORD];
 }
 
 function postFields() {
-  const { TITLE_FIELD, CONTENT_FIELD, CATEGORY_ID } = constants;
-  return [TITLE_FIELD, CONTENT_FIELD, CATEGORY_ID];
+  const { TITLE, CONTENT, CATEGORY_IDS } = fields;
+  return [TITLE, CONTENT, CATEGORY_IDS];
 }
 
 module.exports = { loginFields, userFields, postFields };

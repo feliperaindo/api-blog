@@ -1,6 +1,8 @@
+const { migration } = require('../SSOT/exporter');
+
 module.exports = {
   up: async (queryInterface, Sequelize) => 
-    queryInterface.createTable('users', {
+    queryInterface.createTable(migration.USERS, {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -8,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       displayName: {
-        field: 'display_name',
+        field: migration.DISPLAY_NAME,
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -25,5 +27,5 @@ module.exports = {
         allowNull: true,
       },
     }),
-  down: async (queryInterface, __Sequelize) => queryInterface.dropTable('users'),
+  down: async (queryInterface, __Sequelize) => queryInterface.dropTable(migration.USERS),
 };

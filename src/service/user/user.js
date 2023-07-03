@@ -1,5 +1,5 @@
 // Fonte da verdade
-const { errorMessages, http, constants } = require('../../SSOT/exporter');
+const { errorMessages, http, fields } = require('../../SSOT/exporter');
 
 // Json Web Token manager
 const jwtManager = require('../../utils/JWT/jwtManager');
@@ -8,7 +8,7 @@ const jwtManager = require('../../utils/JWT/jwtManager');
 const { User } = require('../../models');
 
 async function getAll() {
-  return User.findAll({ raw: true, attributes: { exclude: [constants.PASSWORD_FIELD] } });
+  return User.findAll({ raw: true, attributes: { exclude: [fields.PASSWORD] } });
 }
 
 async function getUserByEmail(email) {
@@ -18,7 +18,7 @@ async function getUserByEmail(email) {
 async function getUserById(id) {
   const user = await User.findByPk(
     id,
-    { raw: true, attributes: { exclude: [constants.PASSWORD_FIELD] } },
+    { raw: true, attributes: { exclude: [fields.PASSWORD] } },
   );
 
   if (user === null) {

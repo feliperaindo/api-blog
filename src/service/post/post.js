@@ -1,5 +1,5 @@
 // Fonte da verdade
-const { constants } = require('../../SSOT/exporter');
+const { model, fields } = require('../../SSOT/exporter');
 
 // Utils
 const utils = require('../../utils/validators');
@@ -13,13 +13,13 @@ async function getAll({ email }) {
       include: [
         {
           model: models.User,
-          as: 'user',
+          as: model.USER_ALIAS,
           where: { email },
-          attributes: { exclude: [constants.PASSWORD_FIELD] },
+          attributes: { exclude: [fields.PASSWORD] },
         },
         {
           model: models.Category,
-          as: 'categories',
+          as: model.CATEGORY_ALIAS,
           through: { attributes: [] },
         },
       ],
@@ -30,7 +30,7 @@ async function getAll({ email }) {
 async function getUseId(email, password, transaction) {
   return models.User.findOne({
     where: { email, password },
-    attributes: [constants.ID],
+    attributes: [model.DEFAULT],
     transaction,
   });
 }
@@ -51,7 +51,7 @@ async function getBlogPost(id, transaction) {
 }
 
 async function blogPostManager({ content, title, categoryIds }, { email, password }) {
-  const allCategories = await models.Category.findAll({ attributes: [constants.ID] });
+  const allCategories = await models.Category.findAll({ attributes: [model.DEFAULT] });
 
   utils.validateCategoryIds(allCategories, categoryIds);
 

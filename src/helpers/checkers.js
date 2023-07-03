@@ -1,5 +1,5 @@
 // Fonte da verdade
-const { constants } = require('../SSOT/exporter');
+const { rules } = require('../SSOT/exporter');
 
 function keyChecker(object, key) {
   return Object.prototype.hasOwnProperty.call(object, key);
@@ -11,15 +11,15 @@ function emailChecker(email) {
 }
 
 function passwordChecker(password) {
-  return password.length >= constants.PASSWORD_MIN;
+  return password.length >= rules.PASSWORD_MIN;
 }
 
 function displayChecker(display) {
-  return display.length >= constants.DISPLAY_MIN;
+  return display.length >= rules.DISPLAY_MIN;
 }
 
 function isEmpty(value) {
-  return value.length === constants.EMPTY;
+  return value.length === rules.EMPTY;
 }
 
 module.exports = {
