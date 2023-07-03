@@ -7,6 +7,26 @@ const utils = require('../../utils/validators');
 // Models
 const models = require('../../models');
 
+async function getAll({ email }) {
+  return models.BlogPost.findAll(
+    {
+      include: [
+        {
+          model: models.User,
+          as: 'user',
+          where: { email },
+          attributes: { exclude: [constants.PASSWORD_FIELD] },
+        },
+        {
+          model: models.Category,
+          as: 'categories',
+          through: { attributes: [] },
+        },
+      ],
+    },
+  );
+}
+
 async function getUseId(email, password, transaction) {
   return models.User.findOne({
     where: { email, password },
@@ -46,4 +66,4 @@ async function blogPostManager({ content, title, categoryIds }, { email, passwor
   });
 }
 
-module.exports = { blogPostManager };
+module.exports = { getAll, blogPostManager };
