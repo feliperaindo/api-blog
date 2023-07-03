@@ -13,4 +13,9 @@ function verifyToken(token) {
   return jwt.verify(token, SECRET);
 }
 
-module.exports = { createToken, verifyToken };
+function decodeToken(token) {
+  const { email, password } = verifyToken(token);
+  return { email, password };
+}
+
+module.exports = { createToken, verifyToken, decodeToken };

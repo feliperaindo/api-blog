@@ -61,6 +61,14 @@ function validateToken(token) {
   }
 }
 
+function validateCategoryIds(allIds, received) {
+  received.forEach((each) => {
+    if (!allIds.some(({ id }) => (id === each))) {
+      throw new Error(errorMessages.CATEGORY_NOT_FOUND, { cause: http.BAD_REQUEST });
+    }
+  });
+}
+
 module.exports = { 
   existFields,
   validateEmail,
@@ -69,4 +77,5 @@ module.exports = {
   existTokenField,
   validatePassword,
   existCategoryFields,
+  validateCategoryIds,
 };

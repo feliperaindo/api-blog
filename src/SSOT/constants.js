@@ -1,8 +1,10 @@
 // Fields
+const ID = 'id';
 const POST = 'post';
 const USER = 'user';
 const LOGIN = 'login';
 const NAME_FIELD = 'name';
+const CATEGORY_ID = 'categoryIds';
 const EMAIL_FIELD = 'email';
 const IMAGE_FIELD = 'image';
 const TITLE_FIELD = 'title';
@@ -22,11 +24,13 @@ const EXPIRED_TOKEN = 'jwt expired';
 const INVALID_SIGNATURE = 'invalid signature';
 
 module.exports = {
+  ID,
   POST,
   USER,
   LOGIN,
   EMPTY,
   NAME_FIELD,
+  CATEGORY_ID,
   DISPLAY_MIN,
   EMAIL_FIELD,
   IMAGE_FIELD,

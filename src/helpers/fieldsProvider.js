@@ -10,8 +10,8 @@ function userFields() {
 }
 
 function postFields() {
-  const { TITLE_FIELD, CONTENT_FIELD } = constants;
-  return [TITLE_FIELD, CONTENT_FIELD];
+  const { TITLE_FIELD, CONTENT_FIELD, CATEGORY_ID } = constants;
+  return [TITLE_FIELD, CONTENT_FIELD, CATEGORY_ID];
 }
 
 module.exports = { loginFields, userFields, postFields };
