@@ -14,4 +14,8 @@ function postFields() {
   return [TITLE, CONTENT, CATEGORY_IDS];
 }
 
-module.exports = { loginFields, userFields, postFields };
+function postPutFields() {
+  return [fields.TITLE, fields.CONTENT];
+}
+
+module.exports = { loginFields, userFields, postFields, postPutFields };

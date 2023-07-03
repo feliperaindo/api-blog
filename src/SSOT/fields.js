@@ -10,6 +10,7 @@ const DISPLAY = 'displayName';
 const CONTENT = 'content';
 const PASSWORD = 'password';
 const CATEGORY_IDS = 'categoryIds';
+const POST_PUT = 'postPut';
 
 module.exports = {
   POST,
@@ -22,5 +23,6 @@ module.exports = {
   DISPLAY,
   CONTENT,
   PASSWORD,
+  POST_PUT,
   CATEGORY_IDS,
 };

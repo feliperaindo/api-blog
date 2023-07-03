@@ -19,7 +19,11 @@ post.get(routes.SEARCH_TERM, controller.post.searchPostByTerm);
 
 post.get(routes.ID, controller.post.postById);
 
-post.put(routes.ID, controller.post.updatePost);
+post.put(
+  routes.ID,
+  middleware.postMid.validadePutFields,
+  controller.post.updatePost,
+);
 
 post.use(middleware.postMid.validadeFields);
 

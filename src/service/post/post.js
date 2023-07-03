@@ -27,8 +27,9 @@ async function getAll({ email }) {
   );
 }
 
-async function getById({ email }, id) {
-  const post = await models.BlogPost.findByPk(id, { include: 
+async function getById({ email }, id, transaction = null) {
+  const post = await models.BlogPost.findByPk(id, { transaction,
+    include: 
     [{
         model: models.User,
         as: model.USER_ALIAS,
@@ -48,7 +49,7 @@ async function getById({ email }, id) {
   return post;
 }
 
-async function getUserId(email, password, transaction) {
+async function getUserId(email, password, transaction = null) {
   return models.User.findOne({
     where: { email, password },
     attributes: [model.DEFAULT],
@@ -87,4 +88,22 @@ async function blogPostManager({ content, title, categoryIds }, { email, passwor
   });
 }
 
-module.exports = { getAll, getById, blogPostManager };
+async function updateBlogPost(title, content, id, transaction = null) {
+  return models.BlogPost.update({ title, content }, { where: { id }, transaction });
+}
+
+async function putBlogPost(id, { title, content }, { email, password }) {
+  const loggedUser = await getUserId(email, password);
+
+  if (+id !== loggedUser.id) {
+    throw new Error(errorMessages.USER_UNAUTHORIZED, { cause: http.UNAUTHORIZED });
+  }
+
+  return models.sequelize.transaction(async (updatePost) => {
+    await updateBlogPost(title, content, id, updatePost);
+
+    return getById({ email }, id, updatePost);
+  });
+}
+
+module.exports = { getAll, getById, putBlogPost, blogPostManager };

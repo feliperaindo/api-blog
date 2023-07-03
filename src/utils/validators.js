@@ -12,6 +12,7 @@ function existFields(allFields, type) {
     login: fieldsProvider.loginFields(),
     user: fieldsProvider.userFields(),
     post: fieldsProvider.postFields(),
+    postPut: fieldsProvider.postPutFields(),
   };
 
   allTypes[type].forEach((field) => {

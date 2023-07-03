@@ -33,8 +33,18 @@ async function postById(request, response, next) {
   }
 }
 
-async function updatePost(request, response) {
-  return { request, response };
+async function updatePost(request, response, next) {
+  try {
+   const user = jwt.decodeToken(request.headers.authorization);
+   const postUpdated = await service.post.putBlogPost(
+    request.params.id,
+    request.body,
+    user,
+    );
+   return response.status(http.OK).send(postUpdated);
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function deletePost(request, response) {

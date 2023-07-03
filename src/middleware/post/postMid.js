@@ -13,4 +13,13 @@ function validadeFields(request, __response, next) {
   }
 }
 
-module.exports = { validadeFields };
+function validadePutFields(request, __response, next) {
+  try {
+    utils.existFields(request.body, fields.POST_PUT);
+    next();
+  } catch (error) {
+    next(error);
+  }
+}
+
+module.exports = { validadeFields, validadePutFields };
