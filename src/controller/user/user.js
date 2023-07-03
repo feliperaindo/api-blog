@@ -1,6 +1,9 @@
 // Fonte da verdade
 const { http } = require('../../SSOT/exporter');
 
+// util
+const jwt = require('../../utils/JWT/jwtManager');
+
 // Service
 const service = require('../../service/exporter');
 
@@ -28,7 +31,9 @@ async function userById(request, response, next) {
 }
 
 async function deleteMe(request, response) {
-  return { request, response };
+  const user = jwt.decodeToken(request.headers.authorization);
+  await service.user.deleteMe(user);
+  return response.status(http.NO_CONTENT).send();
 }
 
 module.exports = { registerUser, allUsers, userById, deleteMe };

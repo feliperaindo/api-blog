@@ -7,6 +7,7 @@ const jwtManager = require('../../utils/JWT/jwtManager');
 // Models
 const { User } = require('../../models');
 
+// Gets
 async function getAll() {
   return User.findAll({ raw: true, attributes: { exclude: [fields.PASSWORD] } });
 }
@@ -27,6 +28,7 @@ async function getUserById(id) {
   return user;
 }
 
+// Post
 async function postUser(info) {
   const { email, password, displayName } = info;
   const image = info.image || null;
@@ -40,8 +42,14 @@ async function postUser(info) {
   throw new Error(errorMessages.USER_REGISTERED, { cause: http.CONFLICT });
 }
 
+// Delete
+async function deleteMe({ email, password }) {
+  return User.destroy({ where: { email, password } });
+}
+
 module.exports = { 
   getAll,
+  deleteMe,
   postUser,
   getUserById,
   getUserByEmail,
