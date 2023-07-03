@@ -1,5 +1,5 @@
 // Fonte da verdade
-const { model, fields } = require('../../SSOT/exporter');
+const { model, fields, errorMessages, http } = require('../../SSOT/exporter');
 
 // Utils
 const utils = require('../../utils/validators');
@@ -27,7 +27,28 @@ async function getAll({ email }) {
   );
 }
 
-async function getUseId(email, password, transaction) {
+async function getById({ email }, id) {
+  const post = await models.BlogPost.findByPk(id, { include: 
+    [{
+        model: models.User,
+        as: model.USER_ALIAS,
+        where: { email },
+        attributes: { exclude: [fields.PASSWORD] },
+      },
+      { 
+        model: models.Category,
+        as: model.CATEGORY_ALIAS,
+        through: { attributes: [] }, 
+    }],
+  });
+
+  if (post === null) {
+    throw new Error(errorMessages.POST_NOT_FOUND, { cause: http.NOT_FOUND });
+  }
+  return post;
+}
+
+async function getUserId(email, password, transaction) {
   return models.User.findOne({
     where: { email, password },
     attributes: [model.DEFAULT],
@@ -56,7 +77,7 @@ async function blogPostManager({ content, title, categoryIds }, { email, passwor
   utils.validateCategoryIds(allCategories, categoryIds);
 
   return models.sequelize.transaction(async (newPost) => {
-    const { id } = await getUseId(email, password, newPost);
+    const { id } = await getUserId(email, password, newPost);
 
     const blogPost = await createBlogPost(title, content, id, newPost);
 
@@ -66,4 +87,4 @@ async function blogPostManager({ content, title, categoryIds }, { email, passwor
   });
 }
 
-module.exports = { getAll, blogPostManager };
+module.exports = { getAll, getById, blogPostManager };

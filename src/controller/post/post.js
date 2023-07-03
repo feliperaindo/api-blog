@@ -23,8 +23,14 @@ async function allPosts(request, response) {
   return response.status(http.OK).send(all);
 }
 
-async function postById(request, response) {
-  return { request, response };
+async function postById(request, response, next) {
+  try {
+    const user = jwt.decodeToken(request.headers.authorization);
+    const byId = await service.post.getById(user, request.params.id);
+    return response.status(http.OK).send(byId);
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function updatePost(request, response) {
