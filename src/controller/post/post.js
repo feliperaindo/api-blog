@@ -47,8 +47,14 @@ async function updatePost(request, response, next) {
   }
 }
 
-async function deletePost(request, response) {
-  return { response, request };
+async function deletePost(request, response, next) {
+  try {
+    const user = jwt.decodeToken(request.headers.authorization);
+    await service.post.deleteBlogPost(request.params.id, user);
+    return response.status(http.NO_CONTENT).send();
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function searchPostByTerm(request, response) {

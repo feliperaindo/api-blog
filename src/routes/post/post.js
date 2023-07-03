@@ -25,9 +25,11 @@ post.put(
   controller.post.updatePost,
 );
 
-post.use(middleware.postMid.validadeFields);
-
-post.post(routes.ROOT, controller.post.registerPost);
+post.post(
+  routes.ROOT,
+  middleware.postMid.validadeFields,
+  controller.post.registerPost,
+);
 
 post.delete(routes.ID, controller.post.deletePost);
 

@@ -7,6 +7,7 @@ const utils = require('../../utils/validators');
 // Models
 const models = require('../../models');
 
+// Gets
 async function getAll({ email }) {
   return models.BlogPost.findAll(
     {
@@ -49,6 +50,10 @@ async function getById({ email }, id, transaction = null) {
   return post;
 }
 
+async function getBlogPost(id, transaction = null) {
+  return models.BlogPost.findByPk(id, { transaction, raw: true });
+}
+
 async function getUserId(email, password, transaction = null) {
   return models.User.findOne({
     where: { email, password },
@@ -57,6 +62,7 @@ async function getUserId(email, password, transaction = null) {
   });
 }
 
+// Posts
 async function createBlogPost(title, content, userId, transaction) {
   return models.BlogPost.create({ title, content, userId }, { transaction });
 }
@@ -66,10 +72,6 @@ async function addCategories(categories, postId, transaction) {
     categories.map((categoryId) => ({ postId, categoryId })),
     { transaction },
   );
-}
-
-async function getBlogPost(id, transaction) {
-  return models.BlogPost.findByPk(id, { transaction, raw: true });
 }
 
 async function blogPostManager({ content, title, categoryIds }, { email, password }) {
@@ -88,14 +90,16 @@ async function blogPostManager({ content, title, categoryIds }, { email, passwor
   });
 }
 
+// Puts
 async function updateBlogPost(title, content, id, transaction = null) {
   return models.BlogPost.update({ title, content }, { where: { id }, transaction });
 }
 
 async function putBlogPost(id, { title, content }, { email, password }) {
   const loggedUser = await getUserId(email, password);
+  const blogPost = await getBlogPost(id);
 
-  if (+id !== loggedUser.id) {
+  if (blogPost.userId !== loggedUser.id) {
     throw new Error(errorMessages.USER_UNAUTHORIZED, { cause: http.UNAUTHORIZED });
   }
 
@@ -106,4 +110,21 @@ async function putBlogPost(id, { title, content }, { email, password }) {
   });
 }
 
-module.exports = { getAll, getById, putBlogPost, blogPostManager };
+// Delete
+async function deleteBlogPost(id, { email, password }) {
+  const blogPost = await getBlogPost(id);
+
+  if (blogPost === null) {
+    throw new Error(errorMessages.POST_NOT_FOUND, { cause: http.NOT_FOUND });
+  }
+
+  const loggedUser = await getUserId(email, password);
+  
+  if (blogPost.userId !== loggedUser.id) {
+    throw new Error(errorMessages.USER_UNAUTHORIZED, { cause: http.UNAUTHORIZED });
+  }
+
+  return models.BlogPost.destroy({ where: { id } });
+}
+
+module.exports = { getAll, getById, putBlogPost, blogPostManager, deleteBlogPost };
