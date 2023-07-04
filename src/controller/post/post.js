@@ -17,9 +17,8 @@ async function registerPost(request, response, next) {
   }
 }
 
-async function allPosts(request, response) {
-  const user = jwt.decodeToken(request.headers.authorization);
-  const all = await post.getters.getAll(user);
+async function allPosts(__request, response) {
+  const all = await post.getters.getAll();
   return response.status(http.OK).send(all);
 }
 
