@@ -5,12 +5,12 @@ const { http } = require('../../SSOT/exporter');
 const jwt = require('../../utils/JWT/jwtManager');
 
 // Service
-const service = require('../../service/exporter');
+const { post } = require('../../service/exporter');
 
 async function registerPost(request, response, next) {
   try {
     const user = jwt.decodeToken(request.headers.authorization);
-    const successRegister = await service.post.blogPostManager(request.body, user);
+    const successRegister = await post.posters.blogPostManager(request.body, user);
     return response.status(http.CREATED).send(successRegister);
   } catch (error) {
     next(error);
@@ -19,14 +19,14 @@ async function registerPost(request, response, next) {
 
 async function allPosts(request, response) {
   const user = jwt.decodeToken(request.headers.authorization);
-  const all = await service.post.getAll(user);
+  const all = await post.getters.getAll(user);
   return response.status(http.OK).send(all);
 }
 
 async function postById(request, response, next) {
   try {
     const user = jwt.decodeToken(request.headers.authorization);
-    const byId = await service.post.getById(user, request.params.id);
+    const byId = await post.getters.getById(user, request.params.id);
     return response.status(http.OK).send(byId);
   } catch (error) {
     next(error);
@@ -36,7 +36,7 @@ async function postById(request, response, next) {
 async function updatePost(request, response, next) {
   try {
    const user = jwt.decodeToken(request.headers.authorization);
-   const postUpdated = await service.post.putBlogPost(
+   const postUpdated = await post.puts.putBlogPost(
     request.params.id,
     request.body,
     user,
@@ -50,7 +50,7 @@ async function updatePost(request, response, next) {
 async function deletePost(request, response, next) {
   try {
     const user = jwt.decodeToken(request.headers.authorization);
-    await service.post.deleteBlogPost(request.params.id, user);
+    await post.deletes.deleteBlogPost(request.params.id, user);
     return response.status(http.NO_CONTENT).send();
   } catch (error) {
     next(error);
@@ -58,7 +58,9 @@ async function deletePost(request, response, next) {
 }
 
 async function searchPostByTerm(request, response) {
-  return { request, response };
+  const user = jwt.decodeToken(request.headers.authorization);
+  const searchResult = await post.getters.getBySearch(request.query.q, user);
+  return response.status(http.OK).send(searchResult);
 }
 
 module.exports = {
